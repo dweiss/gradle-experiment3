@@ -1,0 +1,19 @@
+
+plugins {
+  id 'base'
+}
+
+task createDistro(type: Copy) {
+  from file("file.txt")
+  into 'build/distro'
+  rename { String fileName ->
+    fileName.replace("file.txt", "file-pb.txt")
+  }
+}
+
+assemble.dependsOn(createDistro)
+
+artifacts {
+  archives file("build/distro")
+}
+

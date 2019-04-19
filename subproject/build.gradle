@@ -1,0 +1,21 @@
+
+plugins {
+  id 'base'
+}
+
+group "org.foo"
+version "1.0"
+
+task createDistro(type: Copy) {
+  from file("file.txt")
+  into 'build/distro'
+  rename { String fileName ->
+    fileName.replace("file.txt", "file-subproject.txt")
+  }
+}
+
+assemble.dependsOn(createDistro)
+
+artifacts {
+  archives file("build/distro/file-subproject.txt")
+}

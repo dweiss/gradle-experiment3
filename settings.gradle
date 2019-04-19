@@ -1,0 +1,6 @@
+
+rootProject.name = "project"
+
+includeBuild 'subproject'
+include 'pa'
+include 'pb'

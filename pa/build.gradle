@@ -1,0 +1,23 @@
+
+configurations {
+  archives
+}
+
+task createDistro(type: Copy) {
+  from file("file.txt")
+  into 'build/distro/pa'
+  rename { String fileName ->
+    fileName.replace("file.txt", "file-pa.txt")
+  }
+}
+
+task clean(type: Delete) {
+  delete 'build/distro'
+}
+
+artifacts {
+  archives file("build/distro"), {
+    builtBy createDistro
+  }
+}
+

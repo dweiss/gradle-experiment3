@@ -1,0 +1,24 @@
+
+plugins {
+  id 'java-library'
+}
+
+dependencies {
+  implementation project(path: ":pa", configuration: 'archives')
+  implementation project(path: ":pb", configuration: 'archives')
+  implementation "org.foo:baz:1.0"
+}
+
+task collectDependencies(type: Sync) {
+  from configurations.runtimeClasspath
+  dependsOn gradle.includedBuild('baz').task(':assemble')
+
+  into "$buildDir/dependencies"
+  doLast {
+    println "Done." + configurations.runtimeClasspath.files
+  }
+}
+
+assemble.dependsOn(
+  collectDependencies
+)
